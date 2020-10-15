@@ -1,0 +1,77 @@
+.main-container {
+    display: flex;
+    margin: 0 50px;
+}
+
+.left-container{
+    width: 20%;
+}
+
+.delete-button {
+    background-color: rgb(164, 192, 245);
+}
+
+
+.right-container {
+    width: 80%;
+    background-color: rgb(239, 239, 248);
+}
+
+.table-form {
+    /* display: flex; */
+    justify-content: center;
+    margin: 0 auto;
+    background-color: rgb(246, 246, 248);
+}
+
+.nice-table{
+    border-collapse: collapse;
+    /* margin: 25px 0; */
+    min-width: 400px;
+}
+
+.nice-table thead tr{
+    text-align: left;
+    background-color: rgb(25, 167, 148);
+    color: rgb(225, 235, 233);
+    font-weight: bold;
+}
+
+.nice-table td{
+    padding: 12px 15px;
+}
+
+.nice-table tbody tr{
+    border-bottom: 1px solid white;
+}
+
+.nice-table tbody tr:nth-of-type(even){
+    background-color: #f3f3f3;
+}
+#table {
+    /* display: flex; */
+}
+
+#table .table-left{
+    float: left;
+    width: 20%;
+    overflow: scroll;
+    background-color: rgb(233, 181, 181);
+}
+
+#table .table-right{
+    width: 80%;
+    float: right;
+    /* background-color: rgb(212, 247, 204); */
+    background-color: white;
+}
+
+ul{
+    /* text-decoration: none; */
+    list-style-type: none;
+}
+
+td.highlight-dim {
+    background-color: rgba(252, 212, 252, 0.938);
+    /* background-color: rgba(0, 0, 0, 0.479); */
+}

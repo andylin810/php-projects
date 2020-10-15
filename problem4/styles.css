@@ -1,0 +1,60 @@
+.nice-table{
+    border-collapse: collapse;
+    margin: 50px auto;
+    min-width: 400px;
+}
+
+.nice-table thead tr{
+    text-align: left;
+    background-color: rgb(25, 167, 148);
+    color: rgb(225, 235, 233);
+    font-weight: bold;
+}
+
+.nice-table td{
+    padding: 12px 15px;
+}
+
+.nice-table tbody tr{
+    border-bottom: 1px solid white;
+}
+
+.nice-table tbody tr:nth-of-type(even){
+    background-color: #f3f3f3;
+}
+
+.main-container {
+    width: 80%;
+    margin: auto;
+}
+
+.table {
+    width: 1000px;
+    margin: 20px auto;
+}
+
+label.string-label {
+    display: block;
+    clear: both;
+}
+
+form#enter-string {
+    width: 200px;
+    margin: auto;
+}
+
+.instruction {
+    font-family:courier,arial,helvetica;
+    margin: 20px auto;
+}
+
+.string-requirement{
+    font-family:courier,arial,helvetica;
+    margin: 20px auto;
+    color: rgb(201, 114, 114);
+}
+
+.string-input-label {
+    font-family:courier,arial,helvetica;
+    color: rgb(48, 47, 47);
+}
