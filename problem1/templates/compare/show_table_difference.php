@@ -1,7 +1,7 @@
 <?php
 
 
-    require 'db_conn.php';
+    require '../../db_conn.php';
 
     session_start();
 

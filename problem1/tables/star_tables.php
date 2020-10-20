@@ -88,7 +88,6 @@
     }
 
 
-
     function displayFactTableSql($table,$db) {
 
         $sql = "SELECT COLUMN_NAME,REFERENCED_TABLE_NAME,REFERENCED_COLUMN_NAME

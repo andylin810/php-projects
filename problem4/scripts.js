@@ -16,7 +16,7 @@ jQuery(function() {
         $('.enter-string').html(row)
 
     //regular expression for string requirement
-    const regExp = RegExp(`^(?=.{${strMin},})(?=.*[a-z])(?=.*[0-9])(?=.*[*+-/])(?=.*[A-Z])(?=.*[~\!@#$%^&()_\`{}<>])(?=.*[:";',\.?]).*$`)
+    const regExp = RegExp(`^(?=.{${strMin},})(?=.*[a-z])(?=.*[0-9])(?=.*[*+-\/])(?=.*[A-Z])(?=.*[~\!@#$%^&()_\`{}<>])(?=.*[:";',\.?]).*$`)
         const newRegexp = regExp.source
         $('.string-input').each(function(){
             $(this).attr('pattern',newRegexp)

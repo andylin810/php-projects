@@ -1,6 +1,12 @@
 <?php
-    require 'db_conn.php';
-    require 'sql_functions.php';
+    /**
+     * This file returns all fields of a table that is a unique key or primary key
+     * then displays them as options, to be displayed in the field select list whenever
+     * a table is changed in the table select list.
+     */
+
+    require '../../db_conn.php';
+    require '../../sql_functions.php';
 
     session_start();
 

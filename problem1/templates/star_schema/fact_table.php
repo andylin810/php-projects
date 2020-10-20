@@ -1,6 +1,13 @@
 <?php
-    require 'db_conn.php';
-    require 'sql_functions.php';
+
+    /**
+     * This file displays the fields of the table being selected as fact table, allowing each of the field 
+     * to be linked to a field from another table as foreign keys, select tag will be disabled if it's already
+     * linked.
+     */
+
+    require '../../db_conn.php';
+    require '../../sql_functions.php';
 
     session_start();
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
@@ -14,7 +21,7 @@
             mysqli_select_db($conn, $db);
 
             echo "Please select the dimension tables:";
-            echo "<form id='connect-tables' action='link_tables.php' method='post'>";
+            echo "<form id='connect-tables' action='templates/star_schema/link_tables.php' method='post'>";
 
             //show fact table fields
             $sql = "DESCRIBE $tableName;";
@@ -58,8 +65,9 @@
                     }
                     $y = 0;
                     while($row = mysqli_fetch_array($table_result)){
-                        if($row[0] != "fact_table" && $row[0] != $tableName) {
-                            $name = $row[0];
+                        //table name
+                        $name = $row[0];
+                        if($name != "fact_table" && $name != $tableName && !empty(getUniqueFields($name,$conn))) {
                             echo "<option value='$name'>$name</option>";
                             if($y == 0) {
                                 array_push($defaultTables,$name);

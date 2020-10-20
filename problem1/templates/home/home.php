@@ -1,30 +1,17 @@
 <div class="left-container">
     <?php
 
-        require 'db_conn.php';
+        session_start();
+        $_SESSION['left-db-button'] = 'database';
+        require 'components/left-container.php';
 
-        $sql = "SHOW databases;";
-        $result = mysqli_query($conn, $sql);
-        $resultCheck = mysqli_num_rows($result);
-        if($resultCheck > 0){
-            echo "<table>";
-            while($row = mysqli_fetch_array($result)){
-                $name = $row[0];
-                echo "<tr>";
-                echo "<td><button class='database' value='$name' >{$name}</button></td>";
-                echo "<td><button class='delete-button' value='$name'>delete</button><br></td>";
-                echo "</tr>";
-
-            }
-            echo "</table>";
-        }
 
     ?>
 </div>
 <div class="right-container">
     <div class="path"></div>
     <div class="table-form">
-        <form action="add_table.php" method="post">
+        <form action="templates/home/add_table.php" method="post">
             <label for="">table name</label><input type="text" name="table_name">
             <input type="button" value="add row" class="addrow">
             <table id="add-table">

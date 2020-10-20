@@ -3,8 +3,8 @@
     session_start();
 
 
-    require 'db_conn.php';
-    require 'sql_functions.php';
+    require '../../db_conn.php';
+    require '../../sql_functions.php';
 
     if(isset($_SESSION['database'])){
         $db = $_SESSION['database'];
@@ -77,11 +77,6 @@
     } else {
         echo "db not set";
     }
-
-
-
-
-
 
 
 

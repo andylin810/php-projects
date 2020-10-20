@@ -1,9 +1,13 @@
 <?php
+    /**
+     * This file displays all tables allowing user to select and display the star schema relationship
+     * between the selected tables if there is any.
+     */
+
     session_start();
 
-
-    require 'db_conn.php';
-    require 'sql_functions.php';
+    require '../../db_conn.php';
+    require '../../sql_functions.php';
 
 
     if(isset($_POST['button_name'])){
@@ -17,7 +21,8 @@
         mysqli_select_db($conn, $db);
 
         echo "<form id='select-dim-tables' action='tables/star_tables.php' method='post'>";
-        $sql = "show tables;";
+        // $sql = "show tables;";
+        $sql = "select tb_name from dim_table;";
         $result = mysqli_query($conn, $sql);
         $resultCheck = mysqli_num_rows($result);
         if($resultCheck > 0){

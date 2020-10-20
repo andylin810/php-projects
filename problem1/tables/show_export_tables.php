@@ -34,6 +34,8 @@
             echo "</ul>";
         }
         echo '<input type="submit" value="export tables" name="submit">';
+
+        
         $_SESSION['export-row'] = 1;
 
 

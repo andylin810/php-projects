@@ -1,6 +1,6 @@
 <?php
-    require 'db_conn.php';
-    require 'sql_functions.php';
+    require '../../db_conn.php';
+    require '../../sql_functions.php';
 
     session_start();
 

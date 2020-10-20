@@ -1,5 +1,5 @@
 <?php
-    require 'db_conn.php';
+    require '../../db_conn.php';
 
     session_start();
     if(isset($_POST['button_name'])){
@@ -15,7 +15,7 @@
         $resultCheck = mysqli_num_rows($result);
         if($resultCheck > 0){
 
-            echo "<form id='compare-table-form' action='show_table_difference.php' method='post'>";
+            echo "<form id='compare-table-form' action='templates/compare/show_table_difference.php' method='post'>";
             for($i = 1; $i < 3; $i++) {
                 echo "table$i:";
                 echo "<select name='table$i'>";

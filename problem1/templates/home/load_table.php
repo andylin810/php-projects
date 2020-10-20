@@ -1,30 +1,19 @@
 <?php
-    require 'db_conn.php';
+
+    /**
+     * This script load all tables from selected database then displaying them
+     * in the form of buttons.
+     */ 
+    require '../../db_conn.php';
 
     session_start();
-    // session_unset();   //deletes session data
-    // session_destroy(); //deletes session 
-
-    // if(!isset($_SESSION['database'])) {
-    
-    //     $button = $_POST['button_name'];
-
-    //     if ($button) {
-    //         mysqli_select_db($conn, $button);
-    //     } else {
-    //         mysqli_select_db($conn, "addend");
-
-    //     }
-    //     $_SESSION['database'] = $button;
-    // } else {
-    //     mysqli_select_db($conn, $_SESSION['database']);
-    // }
 
     if(isset($_POST['button_name'])) {
         $button = $_POST['button_name'];
         $_SESSION['database'] = $button;
     }
 
+    // Execute query to show tables then fetch the results and display them as HTML table
     if(isset($_SESSION['database'])) {
         mysqli_select_db($conn, $_SESSION['database']);
         $sql = "show tables;";
@@ -45,14 +34,6 @@
     } else {
         echo "db not set";
     }
-
-
-    //$result = mysqli_multi_query($mysqli, $query);   -multiple query
-
-    //mysqli_select_db($conn, $button);               -select databse to connect to
-
-    //$sql = "select * from user;";
-
 
         
 

@@ -2,7 +2,7 @@
     session_start();
 
     if(isset($_FILES['upload-file'])){
-        require 'db_conn.php';
+        require '../../db_conn.php';
 
         $fp = $_FILES['upload-file']['tmp_name'];
         $file = fopen($fp, "r");

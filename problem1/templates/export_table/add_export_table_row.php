@@ -1,9 +1,8 @@
 <?php
     session_start();
 
-
-    require 'db_conn.php';
-    require 'sql_functions.php';
+    require "../..//db_conn.php";
+    require '../../sql_functions.php';
 
     if(isset($_SESSION['database'])){
 

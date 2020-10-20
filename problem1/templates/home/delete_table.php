@@ -1,5 +1,9 @@
 <?php
-    require 'db_conn.php';
+
+    /**
+     * This script delete the table in the database.
+     */ 
+    require '../../db_conn.php';
     if(isset($_POST['table'])) {
 
         session_start();
@@ -7,6 +11,8 @@
 
             mysqli_select_db($conn, $_SESSION['database']);
             $table = $_POST['table'];
+
+            // Drop selected table and return a query
             $sql = "DROP TABLE $table;";
             $result = mysqli_query($conn, $sql);
             if (!$result) {

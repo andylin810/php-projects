@@ -17,7 +17,7 @@
                 $factId = $id;
 
                 echo "Please select the fields you would like to export:";
-                echo "<form id='export-table' action='export_file.php' method='post'>";
+                echo "<form id='export-table' action='templates/export_table/export_file.php' method='post'>";
 
                 //export file name 
                 echo "Export File Name: ";
@@ -80,10 +80,6 @@
 
 
                 echo "</form>";
-
-
-
-
 
             } else {
                 echo "all selected tables have to be related!";

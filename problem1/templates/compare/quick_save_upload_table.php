@@ -4,7 +4,7 @@
         session_start();
 
         
-        require 'db_conn.php';
+        require '../../db_conn.php';
 
         if(isset($_SESSION['database'])){
 
@@ -30,17 +30,17 @@
             // echo insertTable($table_name,$fields,$fields[0],$fp);
 
             if (!$result) {
-                header("Location: index.php?error=invaldQuery");
+                header("Location: /?error=invaldQuery");
                 exit();
             } else {
-                header("Location: index.php?success=yes");
+                header("Location: /?success=yes");
                 exit();
             }
-            header("Location: index.php?success=yes");
+            header("Location: /?success=yes");
             exit();
 
         } else {
-            header("Location: index.php?error=missDB");
+            header("Location: /?error=missDB");
             exit();
         }
     }

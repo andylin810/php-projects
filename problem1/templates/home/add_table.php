@@ -3,9 +3,12 @@
     if (isset($_POST['submit'])) {
         session_start();
 
-        
-        require 'db_conn.php';
+        //connect to db
+        require '../../db_conn.php';
 
+
+        // if database is selected, get input data from html form and query for
+        // create a table and save in database
         if(isset($_SESSION['database'])){
 
             mysqli_select_db($conn, $_SESSION['database']);
@@ -14,40 +17,40 @@
 
             $fields = $_POST['fields'];
 
+            // construct query from inputs
             $sql = makeQuery($fields,$table_name);
             $result = mysqli_query($conn, $sql);
+
+            // if result succeeds redirect to home page with success parameter
+            // otherwise send error parameter
             if (!$result) {
-                header("Location: index.php?error=invaldQuery");
+                header("Location: /?error=invaldQuery");
                 exit();
             } else {
-                header("Location: index.php?success=yes");
+                header("Location: /?success=yes");
                 exit();
             }
 
             //print($sql3);
             
 
-            header("Location: index.php?success=yes");
+            header("Location: /?success=yes");
             exit();
-            // $stmt = mysqli_stmt_init($conn);
-            // if (!mysqli_stmt_prepare($stmt,$sql)){
-            //     header("Location: index.php?error=someerror");
-            //     exit();
-            // } else {
-            //     mysqli_stmt_bind_param($stmt,"s",$length );
-            //     mysqli_stmt_execute($stmt);
-            //     mysqli_stmt_store_result($stmt);
-            //     $result = mysqli_stmt_num_rows($stmt);
-            // }
 
-        //}
         } else {
-            header("Location: index.php?error=missDB");
+            header("Location: /?error=missDB");
             exit();
         }
     }
 
-
+    /**
+     * function that accepts fields and table name, return a sql query that
+     * create a table with the specified field and save it to the database.
+     * 
+     * @param mixed[] $field Assoc array of table field properties
+     * @param string $table Table name
+     * @return string Returns the sql statement for creating table
+     */
     function makeQuery($fields, $table) {
         $sql = "CREATE TABLE $table (";
         foreach($fields as $index=>$field) {
@@ -67,16 +70,4 @@
         return $sql;
     }
 
-
-
-        // $stmt = mysqli_stmt_init($conn);
-        // if (!mysqli_stmt_prepare($stmt,$sql)){
-        //     header("Location: index.php?error=someerror");
-        //     exit();
-        // } else {
-        //     mysqli_stmt_bind_param($stmt,"s",$length );
-        //     mysqli_stmt_execute($stmt);
-        //     mysqli_stmt_store_result($stmt);
-        //     $result = mysqli_stmt_num_rows($stmt);
-        // }
 ?>

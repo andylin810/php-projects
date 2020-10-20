@@ -1,6 +1,13 @@
 <?php
+
+    /**
+     * This file processes the form submission and link all fields of the dimension tables 
+     * to the fields of the selected fact table by adding foreign keys to the fact table fields
+     * and reference them to the corresponding fields.
+     */
+
     session_start();
-    require 'db_conn.php';
+    require '../../db_conn.php';
     if(isset($_POST['submit'])){
         if(isset($_SESSION['database']) && isset($_POST['dim-table'])) {
             mysqli_select_db($conn,$_SESSION['database']);
@@ -18,33 +25,6 @@
                 $msg = $e->getMessage();
                 header("Location: /?page=star_schema&link=fail&error=$msg");
             }
-
-            // foreach($dimTableData as $data) {
-            //     foreach($data as $field){
-            //         echo $field ?  $field : "not set";
-            //     }
-                
-            // }
-
-
-            // foreach($fields as $index=>$field) {
-            //     if($field) {
-            //         $factCol = $factColumns[$index];
-            //         $table = $tables[$index];
-            //         $sql = "ALTER TABLE ? ADD FOREIGN KEY (?) REFERENCES ?(?) ON UPDATE CASCADE ON DELETE CASCADE;";
-            //         // $stmt = mysqli_prepare($conn,$sql);
-            //         // mysqli_stmt_bind_param($stmt, "ssss", $factTb,$factCol,$table,$field);
-            //         // mysqli_execute($stmt);
-            //         $newstuff = "$factTable,$factCol,$table,$field";
-            //         echo $sql;
-            //         echo $newstuff;
-            //     }
-    
-            // }
-
-
-            
-
             
         } else {
             echo "db not selected or no data is sent ";
@@ -53,7 +33,19 @@
         echo "did not submit form";
     }
 
-
+    /**
+     * Link fact table to dimension tables by adding foreign keys that reference the 
+     * selected fields.
+     * 
+     * @param Mysqli $conn Mysqli connection object
+     * @param string[] $tables Array of dimention table names being linked to
+     * @param string $factTb Fact table name
+     * @param string[] $fields Array of field names that are being linked to
+     * @param string[] $factColumns Fact table column names
+     * @return void Establish foreign key relationships and add all dimension tables to the
+     * table in database for storing all dimension tables and add the fact table to the table in database
+     * for storing all fact tables
+     */
 
     function linkTables($conn,$tables,$factTb,$fields,$factColumns) {
         mysqli_begin_transaction($conn);
@@ -80,7 +72,7 @@
                     $sql = "ALTER TABLE $factTb ADD FOREIGN KEY ($factCol) REFERENCES $table($field) ON UPDATE CASCADE ON DELETE CASCADE";
                     $result = mysqli_query($conn,$sql);
 
-                    //after linking add table to dimension table list 
+                    //after linking, add table to dimension table list 
                     //check if this table is already in the fact table, if not insert it
                     $sql2 = "select 1 from dim_table where tb_name = '$table' and fk_fact_id = (select id from fact_table
                     where tb_name = '$factTb');";

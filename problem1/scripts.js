@@ -11,7 +11,7 @@ $(document).ready( function() {
 
     $('.main-container').on("click",'.left-container button.database', function() {
         let buttonName = $(this).val();
-        $('#table').load("load_table.php", {
+        $('#table').load("templates/home/load_table.php", {
             button_name : buttonName
         });
         $('.path').html(buttonName+">");
@@ -30,7 +30,7 @@ $(document).ready( function() {
             }
         } else {
             $(this).attr('data-loaded','yes');
-            $(`table#${tableName}`).load("load_record.php", {
+            $(`table#${tableName}`).load("templates/home/load_record.php", {
                 table_name : tableName
             });
         }
@@ -50,7 +50,7 @@ $(document).ready( function() {
                 rowArr.push(field)
                 //console.log(e)
             })
-            const url = 'update_table.php';
+            const url = 'templates/home/update_table.php';
             const fVal = {
                 'key' : $(this).children('td').children('span.0').attr('value'),
                 'val' : $(this).children('td').children('span.0').attr('data-value')
@@ -92,7 +92,7 @@ $(document).ready( function() {
     $(".main-container").on("click", ".left-container .delete-button" ,function(){
         if(confirm(`are you sure you want to delete database "${$(this).val()}"?`)){
             let databaseName = $(this).val();
-            let url = 'delete_database.php';
+            let url = 'templates/home/delete_database.php';
             let data =  {'database': databaseName};
             $.post(url, data, function (response) {
                 // Response div goes here.
@@ -107,11 +107,11 @@ $(document).ready( function() {
       $(".main-container").on("click", ".right-container .delete-table" ,function(){
         if(confirm(`are you sure you want to delete table "${$(this).val()}"?`)){
             let tableName = $(this).val();
-            let url = 'delete_table.php';
+            let url = 'templates/home/delete_table.php';
             let data =  {'table': tableName};
             $.post(url, data, function (response) {
                 // Response div goes here.
-                $("#table").load("load_table.php");
+                $("#table").load("templates/home/load_table.php");
                 alert(`${response} is deleted successfully`);
                 
             });
@@ -180,7 +180,7 @@ $(document).ready( function() {
 
     $(document).on('click',".upload-button",function(e) {
         console.log("hello")
-        const url = "quick_upload_table.php";
+        const url = "templates/compare/quick_upload_table.php";
         const form = $('#save-upload-form')[0];
         console.log(form);
         const formData = new FormData(form);
@@ -225,7 +225,7 @@ $(document).ready( function() {
 
     $(".main-container").on("click", ".select-database" ,function(){
         const buttonName = $(this).val();
-        $('.right-container .compare-table').load("compare_table.php", {
+        $('.right-container .compare-table').load("templates/compare/compare_table.php", {
             button_name : buttonName
         });
 
@@ -233,7 +233,7 @@ $(document).ready( function() {
 
     $(".main-container").on("click", "button.select-fact-table" ,function(){
         const buttonName = $(this).val();
-        $('.right-container .table-form').load("establish_relation.php", {
+        $('.right-container .table-form').load("templates/star_schema/establish_relation.php", {
             button_name : buttonName
         });
 
@@ -245,7 +245,7 @@ $(document).ready( function() {
         //const form = $(this);
         
         const form = new FormData(this);
-        const url = "show_table_difference.php";
+        const url = $(this).attr('action')
         $.ajax({
             type: "POST",
             url: url,
@@ -267,6 +267,7 @@ $(document).ready( function() {
     
         const form = new FormData(this);
         const url = $(this).attr('action');
+        
         console.log("gel")
         
         $.ajax({
@@ -288,7 +289,7 @@ $(document).ready( function() {
 
     $(document).on('change','.select-dim',function(){
         table = $(this).val();
-        const url = "get_options.php";
+        const url = "templates/star_schema/get_options.php";
         const name = $(this).attr('data-col');
         data = {
             table_name : table
@@ -300,7 +301,7 @@ $(document).ready( function() {
    });
 
    $(document).on('click','.select-dim-tables',function () {
-       const url = 'dim_tables.php';
+       const url = 'templates/show_relation/dim_tables.php';
        const buttonName = $(this).val();
        $('#table .table-left').load(url, 
         {
@@ -386,7 +387,7 @@ $(document).ready( function() {
     //change field select options when table changed in select
     $(document).on('change','.export-table-select',function(){
         table = $(this).val();
-        const url = "get_tables.php";
+        const url = "templates/export_table/get_tables.php";
         const name = $(this).attr('id');
         //get row number from id
         const id = name.slice(-1);
@@ -401,7 +402,7 @@ $(document).ready( function() {
 
    $(document).on('click',".add-export-row", function () {
 
-        const url = 'add_export_table_row.php';
+        const url = 'templates/export_table/add_export_table_row.php';
 
 
         let tableArr = []
@@ -433,7 +434,7 @@ $(document).ready( function() {
 
     $(document).on('click',".delete-export-row", function () {
 
-        const url = 'delete_export_table_row.php';
+        const url = 'templates/export_table/delete_export_table_row.php';
 
 
         $.post(url,function(response) {
