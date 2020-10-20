@@ -16,12 +16,42 @@
 </head>
 <body>
 
-    <nav>
-        <a href="/">home</a>
-        <a href="/?page=compare">compare</a>
-        <a href="/?page=star_schema">create star schema</a>
-        <a href="/?page=show_relation">show star schema</a>
-        <a href="/?page=export_table">export table</a>
+    <nav class="nav-bar">
+        <a 
+            <?php 
+            if(!isset($_GET['page']) || $_GET['page']=='home' ) {
+                echo "class='active'";
+            }
+            ?> 
+        href="/">HOME</a>
+        <a 
+            <?php 
+                if($_GET['page']=='compare' ) {
+                    echo "class='active'";
+                }
+            ?> 
+            href="/?page=compare">COMPARE</a>
+        <a         
+            <?php 
+                if($_GET['page']=='star_schema' ) {
+                    echo "class='active'";
+                }
+            ?> 
+            href="/?page=star_schema">CREATE STAR SCHEMA</a>
+        <a 
+            <?php 
+            if($_GET['page']=='show_relation' ) {
+                echo "class='active'";
+            }
+            ?> 
+            href="/?page=show_relation">SHOW STAR SCHEMA</a>
+        <a 
+            <?php 
+            if($_GET['page']=='export_table' ) {
+                echo "class='active'";
+            }
+            ?> 
+            href="/?page=export_table">EXPORT TABLE</a>
 
     </nav>
     </nav>

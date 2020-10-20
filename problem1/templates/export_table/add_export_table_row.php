@@ -1,4 +1,11 @@
 <?php
+
+    /**
+     * This file adds a row to the export page allow user to enter
+     * information for the new export column including column name,
+     * table name, and field name.
+     */
+
     session_start();
 
     require "../..//db_conn.php";

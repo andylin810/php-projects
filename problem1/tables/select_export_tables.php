@@ -8,13 +8,16 @@
         $db = $_SESSION['database'];
         mysqli_select_db($conn, $db);
 
-        if(isset($_POST['selected-tables'])) {
-            $tables = $_POST['selected-tables'];
+        if(isset($_POST['selected-table'])) {
+            // $tables = $_POST['selected-tables'];
             $factId = 0;
 
-            $id = validateExportTables($tables,$conn);
-            if($id) {
-                $factId = $id;
+            $factId= $_POST['selected-table'];
+            $dimTables = getDimTableFromFact($factId,$conn);
+
+            // $id = validateExportTables($tables,$conn);
+            // if($id) {
+                // $factId = $id;
 
                 echo "Please select the fields you would like to export:";
                 echo "<form id='export-table' action='templates/export_table/export_file.php' method='post'>";
@@ -40,7 +43,7 @@
                 echo "<td> Table: ";
                 echo "<select class='export-table-select' id='export-table0' name='export-table[0][tableName]'>";
                 
-                foreach($tables as $table) {
+                foreach($dimTables as $table) {
                     echo "<option value='$table'>$table</option>";
                 }
                 echo  "</select>";
@@ -51,7 +54,7 @@
                 echo "<select required='required' id='export-field0' name='export-table[0][fieldName]'>";
                 
                 //get fields from default table
-                $fields = getAllFields($tables[0],$conn);
+                $fields = getAllFields($dimTables[0],$conn);
 
                 echo "<option value=''>---</option>";
                 foreach($fields as $field) {
@@ -81,9 +84,9 @@
 
                 echo "</form>";
 
-            } else {
-                echo "all selected tables have to be related!";
-            }
+            // } else {
+            //     echo "all selected tables have to be related!";
+            // }
             
 
 
@@ -93,4 +96,15 @@
 
     } else {
         echo "db not set";
+    }
+
+    function getDimTableFromFact($factId,$conn) {
+        $dimTables = [];
+        $sql = "SELECT tb_name from dim_table where fk_fact_id = $factId;";
+        $result = mysqli_query($conn,$sql);
+        while($row = mysqli_fetch_array($result)) {
+            array_push($dimTables,$row[0]); 
+        }
+        return $dimTables;
+
     }

@@ -1,4 +1,9 @@
 <?php
+
+    /**
+     * This file gets all fields of the table being passed in by POST request
+     * and return in html options to javascript.
+     */
     require '../../db_conn.php';
     require '../../sql_functions.php';
 

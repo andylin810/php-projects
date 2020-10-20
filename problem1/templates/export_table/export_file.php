@@ -1,5 +1,10 @@
 <?php
 
+    /**
+     * This file will run the query to get the specifed fields from selected tables and fields,
+     * then export data and column names to the export folder /file_exports.
+     */
+
     session_start();
 
 
@@ -80,10 +85,21 @@
 
 
 
-
+    /**
+     * Export data to the export file specified by executing the sql query and writing 
+     * to the export file, file containing data from dimension table columns that are related 
+     * by the star schema fact table.
+     * 
+     * @param string $fileName File name to be exported to
+     * @param string $sql SQL string which returns data to be exported
+     * @param string[] $exportCoumns Assoc array containing information of the export columns
+     * including column name, dimension table name, table field name
+     * @param Mysqli $conn Mysqli connection object
+     * @return void
+     */
     function exportFile($fileName,$sql,$exportColumns,$conn) {
         $result = mysqli_query($conn,$sql);
-        $fh = fopen("$fileName.txt", 'w');
+        $fh = fopen("../../file_exports/$fileName.txt", 'w');
         $colCount = count($exportColumns);
         $sqlRowCount = mysqli_num_rows($result);
         $count = 0;
@@ -111,6 +127,18 @@
         fclose($fh);
     }
 
+    /**
+     * Joining related dimension tables together with fact table and get the query that will return the data
+     * to be exported
+     * 
+     * @param Mysqli $conn Mysqli connection object
+     * @param string[] $exportColumns Assoc array containing information of the export columns
+     * @param string[] $factDimRelatedColumns Assoc array containing linked columns between dimension and fact table
+     * @param string[] $uniqueDimTables Array of distinct dimension table names
+     * @param Mysqli $conn Mysqli connection object
+     * @param string $factTable Fact table name
+     * @return string Returns the sql query string to return the data that is to be exported
+     */
     function joinDimTables($conn,$exportColumns,$factDimRelatedColumns,$uniqueDimTables,$factTable) {
         $columns = '';
         $joins = '';

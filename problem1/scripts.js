@@ -9,6 +9,16 @@ $(document).ready( function() {
     //     $('.path').html(buttonName+">");
     // });
 
+    $('nav.nav-bar').on('click', 'a', function() {
+        $('.nav-bar a').removeClass('active')
+        $(this).addClass('active');
+    })
+
+    $('.main-container').on('click', '.left-container button.db-button', function() {
+        $('button.db-button').removeClass('active')
+        $(this).addClass('active');
+    })
+
     $('.main-container').on("click",'.left-container button.database', function() {
         let buttonName = $(this).val();
         $('#table').load("templates/home/load_table.php", {
@@ -16,9 +26,6 @@ $(document).ready( function() {
         });
         $('.path').html(buttonName+">");
     });
-
-
-
 
     $('.main-container').on("click",'.right-container button.show-table', function() {
         let tableName = $(this).val();
@@ -351,7 +358,7 @@ $(document).ready( function() {
     $(document).on('click','.select-export-tables',function () {
         const url = 'tables/show_export_tables.php';
         const buttonName = $(this).val();
-        $('#table .table-left').load(url, 
+        $('.right-container .table-form').load(url, 
          {
          button_name : buttonName
          });
@@ -372,7 +379,7 @@ $(document).ready( function() {
                data: form, // serializes the form's elements.
                success: function(data)
                {
-                    $("#table .table-right").html(data);
+                    $("#table").html(data);
                 //    alert(data); // show response from the php script.
                },
                cache: false,
