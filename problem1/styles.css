@@ -1,6 +1,7 @@
 .main-container {
     display: flex;
-    margin: 0 50px;
+    margin: 0 3%;
+    /* margin: 0 50px; */
 }
 
 .nav-bar{
@@ -9,6 +10,8 @@
     border-bottom: rgb(141, 141, 141) solid 1px;
     border-top: rgb(141, 141, 141) solid 1px;
     margin-bottom: 10px;
+    margin-left: 22%;
+    margin-right: 3%;
 }
 
 .nav-bar a{
@@ -22,7 +25,7 @@
 }
 
 .nav-bar a:hover {
-    background-color: #ddd;
+    background-color: rgb(231, 231, 231);
     color: black;
 }
 
@@ -49,6 +52,14 @@ button.active {
 
 button.db-button:hover {
     background-color: rgb(199, 194, 194);
+}
+
+button.delete-button {
+    background-color: rgb(250, 178, 178);
+}
+
+button.delete-button:hover {
+    background-color: rgb(247, 138, 138);
 }
 
 .left-container{
@@ -122,4 +133,29 @@ ul{
 td.highlight-dim {
     background-color: rgba(252, 212, 252, 0.938);
     /* background-color: rgba(0, 0, 0, 0.479); */
+}
+
+div.table-row{
+    width: 400px;
+    margin: 4px;
+}
+
+.table-button {
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+    padding: 4px 9px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: normal;
+    background-color: rgb(221, 221, 221);
+}
+
+.table-button:hover{
+    background-color: rgb(202, 202, 202);
+}
+
+.table-row .delete-table,.modify-table{
+    float: right;
+    overflow: scroll;
 }

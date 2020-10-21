@@ -1,6 +1,6 @@
 <?php
 
-    generateData(1000000,5);
+    generateData(500,5);
 
     function generateData($maxRow,$maxCol) {
         $fh = fopen('random_data.txt', 'w');

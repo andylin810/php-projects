@@ -22,12 +22,13 @@
         if($resultCheck > 0){
             while($row = mysqli_fetch_array($result)){
                 $name = $row[0];
-                echo "<button class='show-table' value='$name' data-loaded='no'>$name</button>";
-                echo "<button class= 'delete-table' value='$name'>Drop Table</button>";
-                echo "<button class= 'modify-table' value='$name'>Save Changes</button><br>";
+                echo "<div class='table-row'>";                
+                echo "<button class='show-table table-button' value='$name' data-loaded='no'>$name</button>";
+                echo "<button class= 'delete-table table-button' value='$name'>Drop Table</button>";
+                echo "<button class= 'modify-table table-button' value='$name'>Save Changes</button>";
     
-                echo "<table class='nice-table' id='$name'>";
-                echo "</table>";
+                echo "<table class='nice-table' id='$name'></table>";
+                echo "</div>";     
     
             }
         }

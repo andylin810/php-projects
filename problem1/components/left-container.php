@@ -18,9 +18,22 @@
             echo "<tr>";
             echo "<td><button class='$buttonClass db-button' value='$name' >{$name}</button></td>";
             if($buttonClass == 'database')
-                echo "<td><button class='delete-button' value='$name'>delete</button><br></td>";
+                echo "<td><button class='delete-button db-button' value='$name'>delete</button><br></td>";
             echo "</tr>";
 
         }
         echo "</table>";
+
+        // echo "<ul";
+        // while($row = mysqli_fetch_array($result)){
+        //     $name = $row[0];
+        //     echo "<li>";
+        //     echo "<div class='$buttonClass>$name";
+        //     // if($buttonClass == 'database')
+        //     //     echo "<button class='delete-button' value='$name'>delete</button>";
+        //     echo "</div>";
+        //     echo "</li>";
+
+        // }
+        // echo "</ul>";
     }

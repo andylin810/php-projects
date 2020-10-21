@@ -31,7 +31,7 @@ $(document).ready( function() {
         let tableName = $(this).val();
         if ($(this).attr('data-loaded') === "yes") {
             if ($(`table#${tableName}`).css('display') === 'none') {
-                $(`table#${tableName}`).css('display','block');
+                $(`table#${tableName}`).css('display','table');
             } else {
                 $(`table#${tableName}`).css('display','none');
             }

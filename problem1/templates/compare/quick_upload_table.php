@@ -35,6 +35,28 @@
             echo "</td>";
           }
         echo "</tr>";
+        
+        echo "<tr>";
+        echo "<td>data preview: </td>";
+        echo "</tr>";
+
+        //file data preview and showing column number
+        echo "<tr>";
+        for ($x = 0; $x < count($data); $x++) {
+            $colNum = $x+1;
+            echo "<td >";
+            echo "Column $colNum";
+            echo "</td>";
+          }
+        echo "</tr>";
+
+        echo "<tr>";
+        foreach($data as $field) {
+            echo "<td>";
+            echo $field;
+            echo "</td>";
+          }
+        echo "</tr>";
       
         echo "</table>";
         echo "<input value='save table' type='submit' name='submit'>";
