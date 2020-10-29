@@ -1,0 +1,7 @@
+#error-msg{
+    color: red;
+}
+
+.highlight-cell {
+    border: 1px solid red;
+}

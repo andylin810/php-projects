@@ -188,6 +188,7 @@ $(document).ready( function() {
     $(document).on('click',".upload-button",function(e) {
         console.log("hello")
         const url = "templates/compare/quick_upload_table.php";
+        const url2 = "templates/compare/compare_upload_table.php";
         const form = $('#save-upload-form')[0];
         console.log(form);
         const formData = new FormData(form);
@@ -208,6 +209,23 @@ $(document).ready( function() {
             contentType: false,
             processData: false
             });
+
+        $.ajax({
+            type: "POST",
+            url: url2,
+            data: formData, 
+            success: function(data)
+            {
+                $("#table").html(data);
+                //alert(data); // show response from the php script.
+            },
+            error: function(data){
+                alert(data);
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
     });
 
 
@@ -452,6 +470,74 @@ $(document).ready( function() {
         });
     });
 
+
+    $(document).on('click',".add-import-row", function () {
+
+        const url = 'templates/compare/add_import_row.php';
+        const url2 = 'templates/compare/add_display_column.php';
+
+
+        const fileCols =  $('#file-length').val();
+        const data = {
+            column: fileCols
+        }
+
+        $.post(url2,function(response) {
+            let id = Number(response) + 1
+            const row = `<td id='${id-1}'>Column 1</td>`
+
+            $(`#import-table-layout`).append(row);
+        });
+
+        $.post(url,data,function(response) {
+
+            $('#import-file-table').append(response);
+        });
+
+
+    });
+
+    $(document).on('click',".delete-import-row", function () {
+
+        const url = 'templates/compare/delete_import_row.php';
+
+
+        $.post(url,function(response) {
+            // console.log(response);
+            let id = response;
+            if(id > 0)
+            $('tr#'+id).remove();
+            $('td#'+id).remove();
+        });
+    });
+
+    $(document).on('change','.import-column-num',function(){
+        const name = $(this).attr('name')
+        const row = name.substring(7,8)
+        const val = $(this).val()
+        $('#import-table-layout td#'+row).html('Column '+val)
+        console.log( $('td#'+row).html())
+
+   });
+
+   $(document).on('click','.import-layout',function(){
+        const url = 'templates/compare/import_layout.php';
+        const url2 = 'templates/compare/import_compare_layout.php';
+
+        const tableName = $('.layout-select').val();
+        if(tableName) {
+            const data = {
+                table_name : tableName
+            }
+            $.post(url,data,function(response) {
+                $('#import-file-table').html(response)
+            });
+
+            $.post(url2,data,function(response) {
+                $('#compare-table-2').html(response)
+            });
+        }
+    });
    
 
 });

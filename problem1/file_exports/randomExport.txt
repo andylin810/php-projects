@@ -1,0 +1,9 @@
+cus_lname,cus_fname,address,pro_name,pro_price,department
+Lin,Andy,Warden,gpu,130,IT
+Lin,Andy,Steeles,gpu,130,IT
+Lin,Andy,John,SSD,299,IT
+Khan,Omar,Steeles,keyboard,99,IT
+Khan,Omar,John,RAM,199,IT
+T,Alex,Lawrence,keyboard,99,HR
+Boss,Sal,Steeles,mother-board,120,CEO
+Boss,Sal,Warden,mother-board,120,CEO

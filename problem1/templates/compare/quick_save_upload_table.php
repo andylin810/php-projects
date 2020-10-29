@@ -16,18 +16,41 @@
 
             //open file
             $fp = $_FILES['upload-file']['tmp_name'];
-            
-            
-            $sql = createTable($table_name,$fields[0],$fields[1]);
+            $fileFullName = $_FILES['upload-file']['name'];
+            $fileName = substr($fileFullName, 0, -4);
+
+
+            //new stuff
+            $colNames = [];
+            $colTypes = [];
+            $importColumns = [];
+
+            foreach($fields as $field) {
+                array_push($colNames,$field[0]);
+                array_push($colTypes,$field[1]);
+                array_push($importColumns,$field[2]);
+            }
+
+            //column order reference
+            $colOrder = "";
+            foreach($importColumns as $col) {
+                $colOrder .= $col;
+            }
+           
+            //new stuff
+
+            $sql = createTable($table_name,$colTypes,$colNames);
             $result = mysqli_query($conn, $sql);
 
             // $sql2 = insertTable($table_name,$fields,$fields[0],$fp);
             // $result2 = mysqli_query($conn, $sql2);
 
             
-            insertTable($conn,$table_name,$fields,$fields[0],$fp);
+            insertTable($conn,$table_name,$fields,$colTypes,$importColumns,$fp);
+            createLayoutTable($conn,$table_name,$fileName,$colOrder);
             // echo createTable($table_name,$fields[0],$fields[1]);
             // echo insertTable($table_name,$fields,$fields[0],$fp);
+
 
             if (!$result) {
                 header("Location: /?error=invaldQuery");
@@ -67,7 +90,7 @@
         return $sql;
     }
 
-    function insertTable($conn,$table,$fields,$types,$fp){
+    function insertTable($conn,$table,$fields,$types,$importColumns,$fp){
 
         //open the file
         $file = fopen($fp, "r");
@@ -95,9 +118,19 @@
                     $data = str_getcsv($line, ",");
 
                     $value .= "(";
-                    foreach($data as $index=>$field){
-                        $value .= $types[$index] == 'int' ? "$field," : "'$field',";
+
+                    //previous working
+                    // foreach($data as $index=>$field){
+                    //     $value .= $types[$index] == 'int' ? "$field," : "'$field',";
+                    // }
+
+                    //new stuff
+                    foreach($importColumns as $i){
+                        $index = $i-1;
+                        $val = $data[$index];
+                        $value .= $types[$index] == 'int' ? "$val," : "'$val',";
                     }
+
                     $value = substr($value, 0, -1);
                     $value .= "),";
                     $count++;
@@ -115,14 +148,9 @@
         }
     }
 
-        // $stmt = mysqli_stmt_init($conn);
-        // if (!mysqli_stmt_prepare($stmt,$sql)){
-        //     header("Location: index.php?error=someerror");
-        //     exit();
-        // } else {
-        //     mysqli_stmt_bind_param($stmt,"s",$length );
-        //     mysqli_stmt_execute($stmt);
-        //     mysqli_stmt_store_result($stmt);
-        //     $result = mysqli_stmt_num_rows($stmt);
-        // }
+    function createLayoutTable($conn,$tableName,$fileName,$colOrder) {
+        $sql = "INSERT INTO import_layout (tb_name,export_file_name,col_order) values ('$tableName','$fileName','$colOrder');";
+        $result = mysqli_query($conn,$sql);
+    }
+
 ?>

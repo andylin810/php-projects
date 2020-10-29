@@ -29,6 +29,7 @@
                 //add additional row
                 echo "<input class='add-export-row' type='button' value='add row'>";
                 echo "<input class='delete-export-row' type='button' value='delete row'>";
+                echo "set max row: <input class='set-max-row' name='max-row' type='number'>";
 
                 //send fact table data
                 echo "<input type='hidden' name='fact-table' value='$factId' />";

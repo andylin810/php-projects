@@ -1,0 +1,9 @@
+firstName,lastName,Department,productName,productPrice,streetName,phoneNumber
+Andy,Lin,IT,gpu,130,Warden,988-289-2928
+Andy,Lin,IT,gpu,130,Steeles,988-289-2928
+Andy,Lin,IT,SSD,299,John,399-331-5341
+Omar,Khan,IT,keyboard,99,Steeles,647-863-2783
+Omar,Khan,IT,RAM,199,John,988-289-2928
+Alex,T,HR,keyboard,99,Lawrence,988-289-2928
+Sal,Boss,CEO,mother-board,120,Steeles,988-289-2928
+Sal,Boss,CEO,mother-board,120,Warden,132-988-2132

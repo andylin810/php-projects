@@ -63,8 +63,12 @@
 
             }
             $sql = joinDimTables($conn,$exportColumns,$factDimRelatedColumns,$uniqueDimTables,$factTable);
-            exportFile($fileName,$sql,$exportColumns,$conn);
-            // echo $sql;
+            if(isset($_POST['max-row'])) {
+                $maxRow = $_POST['max-row'];
+                exportFile($fileName,$sql,$exportColumns,$conn,$maxRow);
+            } else {
+                exportFile($fileName,$sql,$exportColumns,$conn);
+            }
 
 
 
@@ -97,7 +101,7 @@
      * @param Mysqli $conn Mysqli connection object
      * @return void
      */
-    function exportFile($fileName,$sql,$exportColumns,$conn) {
+    function exportFile($fileName,$sql,$exportColumns,$conn,$maxRow=false) {
         $result = mysqli_query($conn,$sql);
         $fh = fopen("../../file_exports/$fileName.txt", 'w');
         $colCount = count($exportColumns);
@@ -120,9 +124,13 @@
                 if ($index != $colCount-1)
                 fwrite($fh, ",");
             }
+            if($maxRow) {
+                if ($count == $maxRow-1) break;
+            }
             if ($count != $sqlRowCount-1)
             fwrite($fh, "\n");
             $count++;
+
         }
         fclose($fh);
     }
