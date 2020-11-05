@@ -1,4 +1,4 @@
-const { performance } = require('perf_hooks');
+// const { performance } = require('perf_hooks');
 
 let arr = 
     [
@@ -100,6 +100,12 @@ function getFinalInverse(matrix) {
     }
     return inverse
 }
+/**
+ * Generate an identity matrix of size x size.
+ * 
+ * @param {number} size 
+ * @return {number[]} An identity matrix
+ */
 
 function generateIdentityMatrix(size) {
     let matrix = []
@@ -113,6 +119,12 @@ function generateIdentityMatrix(size) {
     return matrix
 }
 
+/**
+ * Accepts a matrix and return the inverse of the matrix.
+ * 
+ * @param {number[]} matrix 2D array representing the matrix
+ * @return {number[]} The inverse matrix
+ */
 function getInverse(matrix) {
     let i = 0
     let j = 0
@@ -169,6 +181,13 @@ function getInverse(matrix) {
     return identity
 }
 
+/**
+ * Generate an array of random square shape matrices.
+ * 
+ * @param {number} size The number of matrices
+ * @param {number} shape The dimension of the square matrices
+ * @return {number[][]} An array of random matrices
+ */
 function generateRandomMatrices(size,shape) {
     let matrices = []
     for (var i = 0; i < size; i++) {
@@ -188,6 +207,14 @@ function generateRandomMatrices(size,shape) {
     return matrices
 }
 
+/**
+ * Swaps the rows of a matrix.
+ * 
+ * @param {number[]} matrix A matrix to be changed
+ * @param {number} row1 One of the rows being swapped
+ * @param {number} row2 Second one of the rows being swapped
+ * @return {number[]} The result matrix after swapping
+ */
 function swapRow(matrix,row1,row2) {
     let rowCopy = matrix[row1].slice()
     matrix[row1] = matrix[row2]
@@ -195,6 +222,13 @@ function swapRow(matrix,row1,row2) {
     return matrix
 }
 
+/**
+ * Multiplying two matrices together.
+ * 
+ * @param {number[]} matrix1 First matrix to be multiplied 
+ * @param {number[]} matrix2 Second matrix to be multiplied 
+ * @return {number[]} The result matrix after multiplication
+ */
 function multiplyMatrices(matrix1,matrix2) {
     let result = []
     if(matrix1[0].length !== matrix2.length) throw "multiplication of these matrices not possible"
@@ -214,7 +248,15 @@ function multiplyMatrices(matrix1,matrix2) {
     return result
 }
 
-function addMatrices(matrix1,matrix2) {
+/**
+ * Adding or subtracting two matrices together.
+ * 
+ * @param {number[]} matrix1 First matrix to be added 
+ * @param {number[]} matrix2 Second matrix to be added 
+ * @param {number[]} minus Determine if it is addition or subtraction
+ * @return {number[]} The result matrix after operation
+ */
+function addMatrices(matrix1,matrix2,minus=false) {
     const len = matrix1.length
     const width = matrix1[0].length
     let matrix = []
@@ -224,16 +266,28 @@ function addMatrices(matrix1,matrix2) {
     for(var i =0; i<len; i++) {
         let row = []
         for(var j = 0; j < len; j++) {
-            row.push(matrix1[i][j] + matrix2[i][j])
+            minus ? row.push(matrix1[i][j] - matrix2[i][j]) : row.push(matrix1[i][j] + matrix2[i][j])
         }
         matrix.push(row)
     }
     return matrix
 }
 
+/**
+ * Subtracting two matrices together.
+ * 
+ * @param {number[]} matrix1 First matrix to be subtracted from 
+ * @param {number[]} matrix2 Second matrix to be subtracted by 
+ * @return {number[]} The result matrix after operation
+ */
+function subtractMatrices(matrix1,matrix2) {
+    return addMatrices(matrix1,matrix2,true)
+}
+
 function multiplyAllMatrices(matrices,operation) {
     let result = []
-    for(var i = 0; i< matrices.length-1; i++) {
+    const len = matrices.length
+    for(var i = 0; i< len-1; i++) {
         if (result.length === 0) { 
             result = operation(matrices[i],matrices[i+1])
         } else {
@@ -243,9 +297,38 @@ function multiplyAllMatrices(matrices,operation) {
     return result
 }
 
-function dividematrices(matrix1,matrix2) {
+/**
+ * Dividing two matrices together.
+ * 
+ * @param {number[]} matrix1 First matrix to be divided from 
+ * @param {number[]} matrix2 Second matrix to be divided by 
+ * @return {number[]} The result matrix after division
+ */
+function divideMatrices(matrix1,matrix2) {
+    const len = matrix1.length
+    const width = matrix1[0].length
+    if (len !== matrix2.length || width !== matrix2[0].length) {
+        throw "matrices must be the same shape"
+    }
     const inverse = getInverse(matrix2)
     return multiplyMatrices(matrix1,inverse)
+}
+
+/**
+ * Rounding the values of the matrix to 2 decimal places
+ * 
+ * @param {number[]} matrix 
+ * @return {number[]} result matrix after rounding
+ */
+function roundDecimals(matrix) {
+    const row = matrix.length
+    const col = matrix[0].length
+    for(var i = 0; i<row;i++) {
+        for(var j = 0; j<col; j++) {
+            matrix[i][j] = matrix[i][j].toFixed(2)
+        }
+    }
+    return matrix
 }
 
 class Fraction {
@@ -299,71 +382,3 @@ class Fraction {
         return copy
     }
 }
-
-// console.log(findDeterminant(arr,3))
-// console.log(findDeterminant(arr2,2))
-// console.log(findDeterminant(newArr,4))
-// console.log(getInverseMatrix(arr,3))
-// console.log(getInverseMatrix(newArr,4))
-
-//calculate time
-// let matrices = generateRandomMatrices(10000,50)
-// var t0 = performance.now()
-
-// let result = multiplyAllMatrices(matrices,addMatrices)
-
-// var t1 = performance.now()
-
-// //multiply time
-// var t2 = performance.now()
-
-// let result2 = multiplyAllMatrices(matrices,multiplyMatrices)
-
-// var t3 = performance.now()
-
-// //divisiom time
-// var t4 = performance.now()
-
-// let result3 = multiplyAllMatrices(matrices,dividematrices)
-
-// var t5 = performance.now()
-
-// console.log("adding matrices took " + (t1 - t0) + " milliseconds.")
-// console.log("multiplying matrices took " + (t3 - t2) + " milliseconds.")
-// console.log("dividing matrices took " + (t5 - t4) + " milliseconds.")
-
-// let a = getInverse(arr3)
-// console.log(a)
-
-
-
-try {
-    let a = addMatrices(arr2,arr)
-    console.log(a)
-} catch(err) {
-    console.log(err)
-}
-
-// let inverse = getFinalInverse(arr3)
-// let matrix = divideMatrix(arr,arr3)
-// console.log(inverse)
-// console.log(matrix)
-
-
-// console.log(result)
-
-// let a = new Fraction(4,1,true)
-// let c = new Fraction(5,1,false)
-// let d = new Fraction(5,1,true)
-// let b = new Fraction(2,3)
-
-// let copy = a.clone()
-
-// a.add(c)
-
-// b.multiply(d)
-// a.add(d)
-
-// console.log(b)
-// console.log(copy)
-// console.log(a)

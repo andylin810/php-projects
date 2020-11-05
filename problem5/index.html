@@ -4,26 +4,34 @@
 
 <head>
     <link rel="stylesheet" href="styles.css">
-    <script src="../jquery-3.5.1.js"></script>
+    <script src="jquery-3.5.1.js"></script>
     <script src="scripts.js"></script>
     <script src="script2.js"></script>
 </head>
 
 
 <body>
+    <div class="top-container">
+        <div class="title">Matrix Calculator</div>
+        <nav class="top-nav">
+            <!-- <button id='manual' class="nav-button">manual</button>
+            <button id='automatic'>automatic</button> -->
+            <a id='manual' class="nav-button active" href="">MANUAL</a>
+            <a id='automatic' class="nav-button" href="">AUTOMATIC</a>
+        </nav>
+    </div>
     <div class="main-container">
        <div class='instruction'>Please enter the number of matrices: </div>
+       <div id='error-msg'></div>
        <form id='matrix' action="">
             <label class="string-input-label" for="count">number of matrices: </label><input id='matrix-num' required='required' name="count" type="number"/>
-            <div id='error-msg'></div>
             <input id='submit' type="submit" value="enter">
         </form>
-
         <div class="table"></div>
-        <!-- <div class='table' id="table1"></div>
-        <div class='table' id="table2"></div>
-        <div class='table' id="table3"></div> -->
+        <div class='result'></div>
     </div>
+        
+    
 
     
    
