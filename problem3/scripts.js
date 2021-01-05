@@ -1,8 +1,11 @@
 let emptyCell = 0
 let total = 0
+let gameStarted = false
+
 
 //setting up the table for the game
 function setUp() {
+    gameStarted = true
     for(var row =0; row < 9; row++) {
         $(".game").append("<tr class='" + row + "'></tr>")
         for(var col =0; col < 9; col++) {
@@ -16,24 +19,30 @@ function setUp() {
             if ( colNum < 9 && (colNum % 3) === 0) {
                 colClass = ' border-right'
             }
-            if(grid[row][col] !== 0){
-                $("."+row).append(`<td class='cell${rowClass}${colClass}' data-row='${row}' data-col='${col}'>${grid[row][col]}</td>`)
+
+            //new stuff
+            if(((row<3 && (col<3 || (col<9 && col>5) ) || (row < 9 && row >= 6 && (col < 3 || ( col < 9 && col>5 )) )) && mode)) {
+                $("."+row).append(`<td class='new-mode${rowClass}${colClass}' data-row='${row}' data-col='${col}'></td>`)
             } else {
-                emptyCell++
-                $("."+row).append(`<td class='cell empty-cell${rowClass}${colClass}' data-row='${row}' data-col='${col}'></td>`)
+                if(grid[row][col] !== 0){
+                    $("."+row).append(`<td class='cell${rowClass}${colClass}' data-row='${row}' data-col='${col}'>${grid[row][col]}</td>`)
+                } else {
+                    emptyCell++
+                    $("."+row).append(`<td class='cell empty-cell${rowClass}${colClass}' data-row='${row}' data-col='${col}'></td>`)
+                }
             }
         }
     }
     total = emptyCell
+    $('.button-menu').append(`<button id="fill">Hint</button>`)
     $('.cell-remaining').text(emptyCell)
 }
 
 $(document).ready(function() {
-    setUp()
-    $('.empty-cell').click(function() {
+    $(document).on('click','.empty-cell',function() {
         selectEmptyCell(this)
     })
-    $('#fill').click(function () {
+    $(document).on('click','#fill',function () {
         let {row,col} = findNext(grid)
         if (row >=0 && col >=0) {
             let num = solutionGrid[row][col]
@@ -50,17 +59,40 @@ $(document).ready(function() {
         }
         
     })
+
+    $(document).on('click','#game-mode', function() {
+        mode = !mode
+        !mode ? $(this).css('backgroundColor','red') : $(this).css('backgroundColor','grey')
+        !mode ? $(this).text('9 BOARD MODE') : $(this).text('5 BOARD MODE')
+        !mode ? $('#size').attr('max','50') : $('#size').attr('max','18')
+    })
+
+    $(document).on('submit','#start-game', function(e) {
+        e.preventDefault()
+        resetGame()
+        const size = Number($('#size').val())
+        loadGame(size)
+    })
+
+    $(document).on('click','#restart', function() {
+        resetGame()
+        loadGame(total)
+        $('#winning').css('display','none')
+    })
+
 })
 
 $(document).on('keypress', function(e) {
     //only handle keyboard input from number keys or <-
-    if(e.which == 8 || !isNaN(String.fromCharCode(e.which))){
-        fillCellWithSelector(grid,'.selected-cell',e)
-        if (checkWin(emptyCell)) {
-            let message = document.getElementById("message");
-            let winScreen = document.getElementById('winning');
-            message.innerHTML = "You Win";
-            winScreen.style.display = 'flex';
+    if(gameStarted) {
+        if((e.which == 8 || !isNaN(String.fromCharCode(e.which))) && e.which != 13) {
+            fillCellWithSelector(grid,'.selected-cell',e)
+            if (checkWin(emptyCell)) {
+                let message = document.getElementById("message");
+                let winScreen = document.getElementById('winning');
+                message.innerHTML = "You Win";
+                winScreen.style.display = 'flex';
+            }
         }
     }
 })
@@ -73,7 +105,6 @@ function fillCellWithSelector(grid,selector,event) {
 
         //if <- or 0 is pressed, clear the grid
         if(event.which == 48 || event.which == 8) {
-            console.log(event.which)
             removeCellAndUI(grid,row,col,selector)
 
             //else the number is entered
@@ -185,3 +216,17 @@ function checkWin(cellCount) {
     return cellCount === 0
 }
 
+function loadGame(size) {
+    startGame(size)
+    setUp()
+}
+
+function resetGame() {
+    emptyCell = 0
+    gameStarted = false
+    $('.button-menu').remove()
+    $(".game").remove()
+    $('.game-content').append(`<table class="game"></table>
+    <div class="button-menu">   
+    </div>`)
+}

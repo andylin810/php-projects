@@ -77,18 +77,18 @@
             <div class="table-upload"></div>
             <div id="table">
             <?php
-                if (isset($_REQUEST['success'])) {
-                    echo "success query!";
-                }
+                // if (isset($_REQUEST['success'])) {
+                //     echo "success query!";
+                // }
 
-                if (isset($_REQUEST['error'])) {
-                    if($_REQUEST['error'] == 'missDB'){
-                        echo "please select a database";
-                    } else if ($_REQUEST['error'] =='invalidQuery'){
-                        echo "invalid query";
-                    }
+                // if (isset($_REQUEST['error'])) {
+                //     if($_REQUEST['error'] == 'missDB'){
+                //         echo "please select a database";
+                //     } else if ($_REQUEST['error'] =='invalidQuery'){
+                //         echo "invalid query";
+                //     }
 
-                }
+                // }
             ?>
             </div>
 

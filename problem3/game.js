@@ -2,9 +2,10 @@ let backtracks = 0
 let grid = []
 let solutionGrid = []
 
-
 let arr = []
 let cellArr = []
+
+let mode = true
 
 //shuffling array containing the the order of number to insert
 // and the array containing the position of the cell for removing purpose
@@ -16,7 +17,15 @@ function shuffleArray(array,array2) {
 
     //initialize array of 0-80
     for(var i = 0; i < 81; i++) {
-        array2.push(i)
+        let row = Math.floor(i/9)
+        let col = i % 9
+        if(mode) {
+            if(!((row<3 && (col<3 || (col<9 && col>5) ) || (row < 9 && row >= 6 && (col < 3 || ( col < 9 && col>5 )) )) && mode)) {
+                array2.push(i)
+            } 
+        } else {
+            array2.push(i)
+        }
     }
 
     for (let i = array.length - 1; i > 0; i--) {
@@ -36,7 +45,11 @@ function generateGrid() {
     for(var row =0; row < 9 ; row++) {
         grid[row] = [];
         for(var col = 0; col < 9; col++){
-            grid[row][col] = 0
+            if(((row<3 && (col<3 || (col<9 && col>5) ) || (row < 9 && row >= 6 && (col < 3 || ( col < 9 && col>5 )) )) && mode)) {
+                grid[row][col] = -1
+            } else {
+                grid[row][col] = 0
+            }
         }
     } 
 }
@@ -235,7 +248,10 @@ function removeCells(cells,grid,removeNum) {
     let count = 0;
     let index = 0;
     //for(var i = 0; i<cells.length; i++) {
+        Math.min
+
     while(count < removeNum) {
+        if(index === cells.length) break
         let currentCellIndex = getIndex(cells[index])
         let currentRow = currentCellIndex.r
         let currentCol = currentCellIndex.c
@@ -250,11 +266,17 @@ function removeCells(cells,grid,removeNum) {
     }
 }
 
-shuffleArray(arr,cellArr)
-generateGrid();
-solveSudoku(grid)
-removeCells(cellArr,grid,50)
-// printSudoku()
+function startGame(size) {
+    grid = []
+    solutionGrid = []
+    arr = []
+    cellArr = []
+    shuffleArray(arr,cellArr)
+    generateGrid();
+    solveSudoku(grid)
+    removeCells(cellArr,grid,size)
+}
+
 
 
 

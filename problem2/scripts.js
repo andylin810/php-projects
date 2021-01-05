@@ -17,36 +17,52 @@ let computer = {
     makeMove : function (){
         console.log(this.moves);
         numTurns++;
+        let move = -1
         
         for (var i=0; i<this.moves.length; i++) {
-            if (this.board[this.moves[i]] === 0) {
+            this.board[this.moves[i]] = 1;
+            if (checkWin(this.board)) {
                 this.board[this.moves[i]] = 1;
-                if (checkWin(this.board)) {
-                    this.board[this.moves[i]] = 1;
-                    let o = document.getElementById(""+this.moves[i]);
-                    o.innerHTML = "O";
-                    this.moves.splice(i,1);
-                    return;
-                } else {
-                    revertMove(this.moves[i],this.board);
-                }
+                let o = document.getElementById(""+this.moves[i]);
+                o.innerHTML = "O";
+                this.moves.splice(i,1);
+                return;
+            } else {
+                revertMove(this.moves[i],this.board);
+            }
+            this.board[this.moves[i]] = 2;
+            if (checkWin(this.board)) {
+                // this.board[this.moves[i]] = 1;
+                // let o = document.getElementById(""+this.moves[i]);
+                // o.innerHTML = "O";
+                // this.moves.splice(i,1);
+                move = i
+                revertMove(this.moves[i],this.board);
+            } else {
+                revertMove(this.moves[i],this.board);
             }
         }
 
-        for (var i=0; i<this.moves.length; i++) {
-            if (this.board[this.moves[i]] === 0) {
-                this.board[this.moves[i]] = 2;
-                if (checkWin(this.board)) {
-                    this.board[this.moves[i]] = 1;
-                    let o = document.getElementById(""+this.moves[i]);
-                    o.innerHTML = "O";
-                    this.moves.splice(i,1);
-                    return;
-                } else {
-                    revertMove(this.moves[i],this.board);
-                }
-            }
+        if(move !== -1) {
+                this.board[this.moves[move]] = 1;
+                let o = document.getElementById(""+this.moves[move]);
+                o.innerHTML = "O";
+                this.moves.splice(move,1);
+                return;
         }
+
+        // for (var i=0; i<this.moves.length; i++) {
+        //     this.board[this.moves[i]] = 2;
+        //     if (checkWin(this.board)) {
+        //         this.board[this.moves[i]] = 1;
+        //         let o = document.getElementById(""+this.moves[i]);
+        //         o.innerHTML = "O";
+        //         this.moves.splice(i,1);
+        //         return;
+        //     } else {
+        //         revertMove(this.moves[i],this.board);
+        //     }
+        // }
 
         const num = Math.floor(Math.random() * this.moves.length);
         const index = this.moves[num];

@@ -150,7 +150,6 @@ jQuery(function() {
         let b = a.parents('table')
         let num = Number(b.attr('id'))
 
-
         let previous = Number($('.current-matrix').data('previous'))
         $(`table#${previous-1}`).css('display','none')
         b.css('display','table')

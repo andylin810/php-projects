@@ -72,9 +72,19 @@
     height: 50px;
 }
 
-.player-color {
-    background-color: rgb(104, 105, 107);
-    color: rgb(241, 241, 241);
+/* transparent border for new mode */
+.new-mode{
+    border: 1px solid transparent;
+    justify-content: center;
+    text-align: center;
+    vertical-align: center;
+    line-height: 50px;
+    margin:0;
+    padding:0;
+    width: 50px;
+    height: 50px;
+    font-size: 50px;
+    display:inline-block;
 }
 
 .computer-color {
@@ -148,4 +158,34 @@
 
 .hint-cell{
     color: green;
+}
+
+
+#game-mode{
+    border-radius: 25px;
+    padding: 10px;
+    margin: 15px auto;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 300;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(104, 105, 107);
+    color: rgb(241, 241, 241);
+    border: none;
+}
+
+.enter-size{
+    width: 500px;
+    font-weight: 300;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 15px auto;
+    display: flex;
+    justify-content: center;
+}
+
+#size {
+    width: 50px;
 }

@@ -14,17 +14,25 @@
 <body>
     <div id="winning">
         <div id="message">hello</div>
-        <a id="restart" href="index.html">Restart</a>
+        <button id="restart">Restart</button>
     </div>
     <div class="main-container">
-        <div class="game-content">
+       
             <div style="display: none;" class="cell-remaining"></div>
-            <table class="game"></table>
-            <div class="button-menu">
-                <button id="fill">Hint</button>
+            <button id="game-mode" class="nine-mode">5 BOARD MODE</button>
+            <div class="enter-size">
+                <div style="padding: 1px; text-align: center;">ENTER MISSING CELLS:</div>
+                <form id="start-game" action="">
+                    <input min="1" max="18" required='required' type="number" id="size">
+                    <input type="submit" value="ENTER"></input>
+                </form>
             </div>
-            
-        </div>
+            <div class="game-content">
+                <table class="game"></table>
+                <div class="button-menu">
+                    
+                </div>
+            </div>
 
     </div>
     

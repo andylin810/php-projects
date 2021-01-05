@@ -7,6 +7,7 @@
         mysqli_select_db($conn, $db);
 
         $table = $_POST['table_name'];
+        $tableSize = $_POST['table_size'];
         $columnNames = [];
         $columnTypes = [];
         $columnReference = [];
@@ -65,7 +66,7 @@
 
 
             echo "<td>From Import File Column: <select class='import-column-num' name='fields[$i][2]'>";
-            for($x= 1; $x <= $arrSize; $x++) {
+            for($x= 1; $x <= $tableSize; $x++) {
                 echo $reference == $x ? "<option selected value='$x'>$x</option>" : "<option value='$x'>$x</option>";
             }
             echo "</select></td>";

@@ -525,9 +525,11 @@ $(document).ready( function() {
         const url2 = 'templates/compare/import_compare_layout.php';
 
         const tableName = $('.layout-select').val();
+        const tableSize = $('#file-length').val();
         if(tableName) {
             const data = {
-                table_name : tableName
+                table_name : tableName,
+                table_size : tableSize
             }
             $.post(url,data,function(response) {
                 $('#import-file-table').html(response)

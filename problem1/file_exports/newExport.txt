@@ -1,0 +1,9 @@
+cus_fname,cus_lname
+Andy,Lin
+Andy,Lin
+Andy,Lin
+Omar,Khan
+Omar,Khan
+Alex,T
+Sal,Boss
+Sal,Boss
