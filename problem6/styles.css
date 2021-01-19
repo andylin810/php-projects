@@ -50,15 +50,78 @@ button{
     transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
 }
-
-.indicator{
-    /* display: block; */
-    /* display: flex; */
-}
   
 .elevator2-status{
     width: 20px;
     height: 20px;
     text-align: center;
     margin: 5px;
+}
+
+
+/* animation part */
+
+/* .test-container{
+    background-color: rgb(78, 78, 78);
+    height: 150px;
+    width: 200px;
+    position: relative;
+} */
+
+.elevator-container {
+    display: flex;
+}
+
+.ele-container{
+    margin: 20px;
+    background-color: rgb(78, 78, 78);
+    /* height: 150px; */
+    width: 260px;
+    position: relative;
+}
+
+
+.floor{
+    width: 100%;
+    position: absolute;
+    height: 49px;
+    border-bottom: 1px solid black;
+}
+
+.floor-num {
+    position: absolute;
+    color: rgba(255, 255, 255, 0.15);
+    font-size: 32px;
+    line-height: 50px;
+    padding-left: 10px;
+}
+
+.elevator{
+    background-color: rgb(214, 204, 190);
+    z-index: 1001;
+    height: 46px;
+    border: solid 2px white;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    /* transform: translate(50px,100px); */
+    left: 110px;
+}
+
+.indicator {
+    position: absolute;
+    font-size: 32px;
+    line-height: 50px;
+    color: rgb(41, 223, 41);
+    /* display: none; */
+}
+
+.up-indicator {
+    left: 32px;
+}
+
+.down-indicator {
+    left: 64px;
 }

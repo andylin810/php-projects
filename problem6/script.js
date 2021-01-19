@@ -177,6 +177,7 @@ class Elevator{
 
     pickUp(floor){
         if(this.building.requests[floor] === this.id){
+            // removeIndicator(floor)
             let person = this.building.requestInfo[floor]
             // this.clearTask(floor)
 
@@ -240,57 +241,120 @@ class Elevator{
             } else {
                 delete this.taskQueue[floor]
             }
+
+            let totalTask = Object.keys(this.taskQueue).length
+            let oppositeTask = Object.keys(this.oppositeTaskQueue).length
+            if(totalTask===0 && this.currentFloor === this.currentDirectiondestFloor){
+                if (oppositeTask !== 0) {
+                    this.taskQueue = this.oppositeTaskQueue
+                    this.oppositeTaskQueue = {}
+                    this.currentDirectiondestFloor = this.oppositeDirectionDestFloor
+                    this.oppositeDirectionDestFloor = 0
+                    this.status *= -1
+                } else {
+                    this.status = 0
+                    this.currentDirectiondestFloor = 0
+                }  
+                //TODO
+            } else if (totalTask!==0 && this.currentFloor === this.currentDirectiondestFloor) {
+                if (oppositeTask !== 0) {
+                    for(var key in this.taskQueue) {
+                        this.addTask(key,this.oppositeTaskQueue)
+                    }
+                    this.taskQueue = this.oppositeTaskQueue
+                    this.oppositeTaskQueue = {}
+                    this.currentDirectiondestFloor = this.getCurrentDestination(this.status)
+                    this.status *= -1
+                } else {
+                    this.currentDirectiondestFloor = this.getCurrentDestination(this.status)
+                    this.status *= -1
+                } 
+            }
         }
-        let totalTask = Object.keys(this.taskQueue).length
-        let oppositeTask = Object.keys(this.oppositeTaskQueue).length
-        if(totalTask===0 && this.currentFloor === this.currentDirectiondestFloor){
-            if (oppositeTask !== 0) {
-                this.taskQueue = this.oppositeTaskQueue
-                this.oppositeTaskQueue = {}
-                this.currentDirectiondestFloor = this.oppositeDirectionDestFloor
-                this.oppositeDirectionDestFloor = 0
-                this.status *= -1
-            } else {
-                this.status = 0
-                this.currentDirectiondestFloor = 0
-            }  
-            //TODO
-        } else if (totalTask!==0 && this.currentFloor === this.currentDirectiondestFloor) {
-            if (oppositeTask !== 0) {
-                for(var key in this.taskQueue) {
-                    this.addTask(key,this.oppositeTaskQueue)
-                }
-                this.taskQueue = this.oppositeTaskQueue
-                this.oppositeTaskQueue = {}
-                this.currentDirectiondestFloor = this.getCurrentDestination(this.status)
-                this.status *= -1
-            } else {
-                this.currentDirectiondestFloor = this.getCurrentDestination(this.status)
-                this.status *= -1
-            } 
-        }
+
     }
+
+    // move() {
+    //     var self = this
+    //     var a = setInterval(function() {
+    //         if(self.currentFloor !== self.currentDirectiondestFloor && self.currentDirectiondestFloor!==0) {
+    //             console.log(self.currentDirectiondestFloor)
+    //             console.log(self.taskQueue)
+
+    //             //animation elevator
+    //             let direction = self.status > 0? true : false
+    //             moveElevator(direction)
+
+    //             self.status === 1? self.currentFloor++ : self.currentFloor--
+    //             self.time++
+    //             self.landFloor(self.currentFloor)
+    //             updateUIFromElevator(self)
+
+                
+    //         } else {
+    //             clearInterval(a)  
+    //         }
+    //     },1000)
+
+    //     // var myFunction = function() {
+    //     //     counter *= 10;
+    //     //     setTimeout(myFunction, counter);
+    //     // }
+    //     // setTimeout(myFunction, counter);
+    // }
 
     move() {
         var self = this
-        var a = setInterval(function() {
-            if(self.currentFloor !== self.currentDirectiondestFloor && self.currentDirectiondestFloor!==0) {
-                console.log(self.currentDirectiondestFloor)
-                console.log(self.taskQueue)
-                self.status === 1? self.currentFloor++ : self.currentFloor--
-                self.time++
-                self.landFloor(self.currentFloor)
-                updateUIFromElevator(self)
-            } else {
-                clearInterval(a)  
-            }
-        },1000)
+        // var a = setInterval(function() {
+        //     if(self.currentFloor !== self.currentDirectiondestFloor && self.currentDirectiondestFloor!==0) {
+        //         console.log(self.currentDirectiondestFloor)
+        //         console.log(self.taskQueue)
 
-        // var myFunction = function() {
-        //     counter *= 10;
-        //     setTimeout(myFunction, counter);
-        // }
-        // setTimeout(myFunction, counter);
+        //         //animation elevator
+        //         let direction = self.status > 0? true : false
+        //         moveElevator(direction)
+
+        //         self.status === 1? self.currentFloor++ : self.currentFloor--
+        //         self.time++
+        //         self.landFloor(self.currentFloor)
+        //         updateUIFromElevator(self)
+
+                
+        //     } else {
+        //         clearInterval(a)  
+        //     }
+        // },1000)
+
+        // let destination = (9 - self.currentDirectiondestFloor) * 50
+        let eleNum = this.id + 1
+        var elem = $('.elevator-' + eleNum)
+        let start = 0
+        var pos = $('.elevator-'+eleNum).position().top
+
+        let id = setInterval(moveUp, 20)
+        // clearInterval(id)
+
+        function moveUp() {
+            if (self.currentFloor === self.currentDirectiondestFloor || self.currentDirectiondestFloor===0) {
+                clearInterval(id);
+            } else {
+                start++
+                if (self.status > 0) {
+                    pos--
+                    elem.css('top',pos + 'px')
+                } else {
+                    pos++
+                    elem.css('top',pos + 'px')
+                }
+                if (start == 50) {
+                    self.status === 1? self.currentFloor++ : self.currentFloor--
+                    self.time++
+                    self.landFloor(self.currentFloor)
+                    updateUIFromElevator(self)
+                    start = 0
+                }
+            }    
+        }
     }
 
     landFloor(floor) {
@@ -301,9 +365,21 @@ class Elevator{
     distanceToPerson(person) {
         if(this.status ===0) 
             return Math.abs(person.from - this.currentFloor)
+
+        //new 
+        if(person.direction === this.status) {
+            if (this.status === 1) {
+                if (person.from > this.currentFloor) 
+                    return person.from - this.currentFloor
+            } else {
+                if (person.from < this.currentFloor)
+                    return this.currentFloor - person.from
+            }
+        }
         let a = Math.abs(this.currentDirectiondestFloor - this.currentFloor)
         let b = Math.abs(person.from - this.currentDirectiondestFloor)
         return a+b
+
     }
 
     getCurrentDestination(direction){
